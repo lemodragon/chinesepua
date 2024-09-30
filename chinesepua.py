@@ -331,8 +331,37 @@ class ChinesePua(Plugin):
             )
 
     # 帮助文档
-    def get_help_text(self, **kwargs):
-        return "生成汉语新解卡片，使用方法，输入：解释 词语"
+    def get_help_text(self, verbose=False, **kwargs):
+        short_help = "简略指南：\n"
+        short_help += "1. 使用以下命令输入：\n"
+        short_help += "   a. 设计 [姓名] [职位] [公司] [联系方式] - 生成社交名片\n"
+        short_help += "   b. 名片 [姓名] [职位] [公司] [联系方式] - 生成名片\n"
+        short_help += "   c. 吐槽 [词语] - 返回幽默的解释和文字卡片\n"
+        short_help += "2. 输入格式：\n"
+        short_help += "   a. 解字 [汉字] - 获取汉字解释和字源信息\n"
+        short_help += "   b. 翻译 [内容] - 进行翻译\n"
+        short_help += "   c. 论证 [内容] - 进行论证分析\n"
+        short_help += "   d. 思考 / 撕考 [内容] - 调用撕考者\n"
+        short_help += f"3. 可用的命令：哲学家、互联网、知识、单词等\n"
+        if not verbose:
+            return short_help
+
+        help_text = "详细指南：\n"
+        help_text += "1. 输入格式说明：\n"
+        help_text += "   a. 吐槽 [词语]，例如 '吐槽 加班' - 返回幽默的新解释和文字卡片\n"
+        help_text += "   b. 设计 / 名片 [姓名] [职位] [公司] [联系方式] - 生成社交名片\n"
+        help_text += "2. 输入解字 [汉字]，例如 '解字 敏' 获取详细汉字解释和字源信息\n"
+        help_text += "3. 输入翻译 [内容] 进行即时翻译\n"
+        help_text += "4. 输入论证 [内容] 或分析 [内容] 进行深度分析和论证，例如：分析 抖音对年轻人的影响利大于弊\n"
+        help_text += "5. 输入思考 [内容] 或撕考 [内容] 调用撕考者\n"
+        help_text += "6. 输入沉思 [内容] 或琢磨 [内容] 触发沉思模式\n"
+        help_text += "7. 输入概念 [内容] 或概念解释 [内容] 进行概念解析\n"
+        help_text += "8. 输入哲学家 [内容] 或哲学 [内容] 进行哲学思考\n"
+        help_text += "9. 输入互联网 [内容] 或web2 [内容] 调用互联网黑话专家\n"
+        help_text += "10. 输入知识 [内容] 或知识卡 [内容] 生成知识卡片\n"
+        help_text += "11. 输入单词 [内容] 或单词卡 [内容] 生成单词卡片\n"
+        help_text += f"示例：设计 张三 法外狂徒 法学教授 普及法律知识 头像URL 和 个人主页URL\n"
+        return help_text
 
 
 def _set_reply_text(
@@ -341,7 +370,6 @@ def _set_reply_text(
     reply = Reply(level, content)
     e_context["reply"] = reply
     e_context.action = EventAction.BREAK_PASS
-
 
 def _send_reply_text(
     content: str, e_context: EventContext, level: ReplyType = ReplyType.ERROR
